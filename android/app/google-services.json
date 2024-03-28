@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "108629988267",
+    "project_id": "easyreaches-b8056",
+    "storage_bucket": "easyreaches-b8056.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108629988267:android:be4ab423ad90f9816bf8ee",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8ahaeGNy4hf-AiUEptc9IAZ-ijwTgD50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
