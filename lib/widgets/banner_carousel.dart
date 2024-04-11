@@ -74,7 +74,7 @@ class _BannerCarouselState extends State<BannerCarousel> {
         DotsIndicator(
           dotsCount:
           _carouselImages.isEmpty ? 1 : _carouselImages.length,
-          position: _dotPosition.toDouble(),
+          position: _dotPosition.toInt(),
           decorator: const DotsDecorator(
             activeColor:Color.fromRGBO(0, 176, 255, 1),
             color: Colors.grey,
