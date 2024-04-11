@@ -1,3 +1,4 @@
+
 //
 // import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -49,6 +50,7 @@
 //         } else {
 //           final productData = snapshot.data!.data() as Map<String, dynamic>;
 //           final productName = productData['productName'] ?? 'Product Name';
+//           final fetchedProductPrice = double.parse(productData['productPrice'] ?? '0.0');
 //
 //           return Padding(
 //             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -83,6 +85,10 @@
 //                         SizedBox(height: 10),
 //                         Text(
 //                           'Name: $productName',
+//                           style: TextStyle(fontSize: 16),
+//                         ),
+//                         Text(
+//                           'Price: \$${fetchedProductPrice.toStringAsFixed(2)}',
 //                           style: TextStyle(fontSize: 16),
 //                         ),
 //                         SizedBox(height: 20),
@@ -123,9 +129,10 @@
 //                             'vendorName': vendorName,
 //                             'vendorCity': vendorCity,
 //                             'vendorState': vendorState,
-//                             'productPrice': productPrice, // Store product price
+//                             'productPrice': fetchedProductPrice, // Store fetched product price
 //                             'rating': rating, // Store rating
 //                             'time': time, // Store current time
+//                             'status': 'incomplete', // Default status
 //                             // Add more fields as needed
 //                           }).then((value) {
 //                             // Handle success
@@ -157,6 +164,8 @@
 //                           print('User is not logged in');
 //                         }
 //                       },
+//
+//
 //                       child: Text('Request Service'),
 //                     ),
 //                   ),
@@ -182,7 +191,7 @@ class ProductVendorDetailsPopup extends StatelessWidget {
   final String vendorName;
   final String vendorCity;
   final String vendorState;
-  final double productPrice;
+  final String productPrice; // Changed productPrice to String
   final double rating; // New field for rating
   final Timestamp time; // New field for time
 
@@ -193,7 +202,7 @@ class ProductVendorDetailsPopup extends StatelessWidget {
     required this.vendorName,
     required this.vendorCity,
     required this.vendorState,
-    required this.productPrice,
+    required this.productPrice, // Changed productPrice to String
     required this.rating, // Added rating parameter
     required this.time, // Added time parameter
     Key? key,
@@ -221,7 +230,7 @@ class ProductVendorDetailsPopup extends StatelessWidget {
         } else {
           final productData = snapshot.data!.data() as Map<String, dynamic>;
           final productName = productData['productName'] ?? 'Product Name';
-          final fetchedProductPrice = double.parse(productData['productPrice'] ?? '0.0');
+          final fetchedProductPrice = double.tryParse(productData['productPrice'] ?? '0.0') ?? 0.0;
 
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -262,6 +271,7 @@ class ProductVendorDetailsPopup extends StatelessWidget {
                           'Price: \$${fetchedProductPrice.toStringAsFixed(2)}',
                           style: TextStyle(fontSize: 16),
                         ),
+                        Text('Price can vary as per work', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),),
                         SizedBox(height: 20),
                         Text(
                           'Vendor Details',
