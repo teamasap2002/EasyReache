@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/Activity/edit.dart';
+import 'package:project/Activity/orders_page.dart';
 import 'package:project/Activity/signup.dart';
 import 'package:project/services/auth.dart';
 class Profile extends StatefulWidget {
@@ -189,10 +190,16 @@ class _ProfileState extends State<Profile> {
                     // SizedBox(width: 20.w,),
                     Text("Your Orders", style: TextStyle(fontSize: 20.sp)),
                     // SizedBox(width: 85.w,),
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 25.r,
-                      color: const Color.fromRGBO(0, 191, 166, 1),
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (
+                            context) => OrdersPage()));
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 25.r,
+                        color: const Color.fromRGBO(0, 191, 166, 1),
+                      ),
                     ),
                   ],
                 ),
