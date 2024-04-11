@@ -49,6 +49,10 @@ dependencies:
   flutter_spinkit: ^5.2.0
   firebase_storage: ^11.6.11
   image_picker:
+  geolocator: ^7.0.3
+  google_maps_flutter: ^2.2.0
+  geocoding: ^3.0.0
+  permission_handler: ^10.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
