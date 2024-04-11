@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UsedServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(108, 99, 255, 1),
+        backgroundColor: const Color.fromRGBO(0, 191, 166, 1),
         title: Text(
           "Used Services",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 25.sp,
           ),
         ),
       ),
@@ -37,11 +38,11 @@ class UsedServicesPage extends StatelessWidget {
                   ListTile(
                     title: Text(
                       data['productName'],
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
                     ),
                     subtitle: Text(
                       'Price: \$${data['productPrice'].toString()}, Rating: ${data['rating'].toString()}',
-                      style: TextStyle(fontSize: 17),
+                      style: TextStyle(fontSize: 17.sp),
                     ),
                     onTap: () {
                       // Handle tapping on an order to view details
