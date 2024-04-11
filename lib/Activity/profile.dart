@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project/Activity/address.dart';
 import 'package:project/Activity/edit.dart';
 import 'package:project/Activity/orders_page.dart';
 import 'package:project/Activity/signup.dart';
@@ -151,7 +152,9 @@ class _ProfileState extends State<Profile> {
                     Text("Saved Address", style: TextStyle(fontSize: 20.sp)),
                     // SizedBox(width: 79.w,),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Address()));
+                      },
                       icon: Icon(
                         Icons.arrow_forward_ios,
                         size: 25.r,
