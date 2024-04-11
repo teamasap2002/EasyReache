@@ -27,6 +27,11 @@ class EasyReachesApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child){
         return MaterialApp(
+          theme: ThemeData(
+            // Apply the custom font globally
+            fontFamily: 'FontMain',
+          ),
+          //home: MyHomePage(),
           debugShowCheckedModeBanner: false,
           routes: {
             '/': (context)=> const SplashScreen(),
