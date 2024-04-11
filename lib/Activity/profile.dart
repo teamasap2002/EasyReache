@@ -32,11 +32,19 @@ class _ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection("Users").doc("${user?.uid}").snapshots(),
+                  stream: FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc("${user?.uid}")
+                      .snapshots(),
                   builder: (context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.waiting){
-                      return const Center(child: CircularProgressIndicator(),);
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
                     }
+                    String profilePhotoUrl =
+                        snapshot.data?['profilePhoto'] ??
+                            "https://cdn-icons-png.flaticon.com/128/1144/1144760.png";
+                    String name = snapshot.data?['name'] ?? "Edit your Profile";
+
                     return Row(
                       children: <Widget>[
                         Container(
@@ -45,10 +53,9 @@ class _ProfileState extends State<Profile> {
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 4,
-                              //color: Theme.of(context).scaffoldBackgroundColor
                               color: const Color.fromRGBO(0, 191, 166, 1),
                             ),
-                            boxShadow:[
+                            boxShadow: [
                               BoxShadow(
                                 spreadRadius: 2,
                                 blurRadius: 10,
@@ -58,39 +65,38 @@ class _ProfileState extends State<Profile> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image:NetworkImage(snapshot.data?['profilePhoto']??"https://cdn-icons-png.flaticon.com/128/1144/1144760.png"),
+                              image: NetworkImage(profilePhotoUrl),
                             ),
                           ),
                         ),
                         SizedBox(
                           width: 10.w,
                         ),
-
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Hey!",
-                              style:
-                              TextStyle(fontWeight: FontWeight.bold,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   color: const Color.fromRGBO(0, 191, 166, 1),
                                   fontSize: 20.sp),
                             ),
                             Text(
-                               snapshot.data?['name'] ??
-                              "Edit your Profile",
-                              style: TextStyle(fontSize: 20.sp, color: const Color
-                                  .fromRGBO(0, 191, 166, 1), fontWeight: FontWeight
-                                  .bold),
+                              name,
+                              style: TextStyle(
+                                  fontSize: 20.sp,
+                                  color: const Color.fromRGBO(0, 191, 166, 1),
+                                  fontWeight: FontWeight.bold),
                             ),
                           ],
                         )
                       ],
                     );
-                  }
+                  },
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 25.h,
                 ),
                 Text(
                   "Account",
@@ -154,10 +160,10 @@ class _ProfileState extends State<Profile> {
                   ],
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 25.h,
                 ),
                 Text(
-                  "My Activity",
+                  "My Activities",
                   style: TextStyle(
                       fontSize: 20.sp, fontWeight: FontWeight.bold),
                 ),
@@ -168,6 +174,29 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 10.h,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.add_shopping_cart,
+                        size: 25.r,
+                        color: const Color.fromRGBO(0, 191, 166, 1),
+                      ),
+                    ),
+
+                    // SizedBox(width: 20.w,),
+                    Text("Your Orders", style: TextStyle(fontSize: 20.sp)),
+                    // SizedBox(width: 85.w,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 25.r,
+                      color: const Color.fromRGBO(0, 191, 166, 1),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -190,7 +219,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30.h,),
+                SizedBox(height: 25.h,),
                 Text(
                   "Notifications",
                   style: TextStyle(
