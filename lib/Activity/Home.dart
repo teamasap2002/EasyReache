@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project/Activity/recommended_product_widget.dart';
+import 'package:project/Activity/recommended_services.dart';
 import 'package:project/widgets/banner_carousel.dart';
 import 'package:project/widgets/home_category_widget.dart';
 
@@ -58,6 +60,11 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 15,
               ),
+
+
+              ApiDataFetcher(apiUrl: 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/recommendations/tJaboglnWfbMESRrArftFXlH1V33', heading: 'Top Picks For You'),
+              ApiDataFetcher(apiUrl: 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/', heading: 'Popular Products'),
+
               HomeCategoryWidget(),
             ],
           ),
