@@ -20,10 +20,10 @@ class EasyReachesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
     return ScreenUtilInit(
-      designSize: Size(width, height),
+      designSize: const Size(412, 755),
       splitScreenMode: true,
       builder: (context, child){
         return MaterialApp(
