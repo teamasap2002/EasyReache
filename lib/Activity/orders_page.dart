@@ -1,9 +1,18 @@
+//
+//
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:project/Activity/store_screen.dart';
+//
+//
 //
 // class OrdersPage extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
+//     // Get the current user
+//     User? user = FirebaseAuth.instance.currentUser;
+//
 //     return Scaffold(
 //       appBar: AppBar(
 //         backgroundColor: Color.fromRGBO(108, 99, 255, 1),
@@ -17,7 +26,8 @@
 //         ),
 //       ),
 //       body: StreamBuilder(
-//         stream: FirebaseFirestore.instance.collection('orders').where('status', isEqualTo: 'incomplete').snapshots(),
+//         // Filter orders based on the current user's ID
+//         stream: FirebaseFirestore.instance.collection('orders').where('status', isEqualTo: 'incomplete').where('userId', isEqualTo: user?.uid).snapshots(),
 //         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 //           if (snapshot.hasError) {
 //             return Center(child: Text('Error: ${snapshot.error}'));
@@ -48,14 +58,15 @@
 //                         ),
 //                         Text(
 //                           'Vendor: ${data['vendorName']}',
-//                           style: TextStyle(fontSize: 17), overflow: TextOverflow.ellipsis,
-//
+//                           style: TextStyle(fontSize: 17),
+//                           overflow: TextOverflow.ellipsis,
 //                         ),
 //                       ],
 //                     ),
 //                     trailing: ElevatedButton.icon(
 //                       onPressed: () {
-//                         // Handle button press
+//                         // Mark the order as complete in Firebase
+//
 //                       },
 //                       icon: Icon(Icons.check, color: Colors.white),
 //                       label: Text(''),
@@ -85,6 +96,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project/Activity/store_screen.dart';
 
 class OrdersPage extends StatelessWidget {
   @override
@@ -144,7 +156,8 @@ class OrdersPage extends StatelessWidget {
                     ),
                     trailing: ElevatedButton.icon(
                       onPressed: () {
-                        // Handle button press
+                        // Mark the order as complete in Firebase
+                        FirebaseFirestore.instance.collection('orders').doc(document.id).update({'status': 'complete'});
                       },
                       icon: Icon(Icons.check, color: Colors.white),
                       label: Text(''),
