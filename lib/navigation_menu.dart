@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project/Activity/Home.dart';
 import 'package:project/Activity/profile.dart';
+import 'package:project/Activity/recommended_services.dart';
 import 'package:project/Activity/services.dart';
 import 'package:project/Activity/store_screen.dart';
+import 'package:http/http.dart' as http;
+
+import 'Activity/recommended_product_widget.dart';
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
 
@@ -15,8 +19,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
   List<Widget> widgetList = [
     Home(),
     StoreScreen(),
-    Profile()
-  ];
+    Profile()]
+    ;
   List<Color> colorList = const[
     Color.fromRGBO(0, 176, 255, 1),
     Color.fromRGBO(108, 99, 255, 1),
