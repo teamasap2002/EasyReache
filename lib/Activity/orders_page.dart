@@ -44,19 +44,20 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(108, 99, 255, 1),
+        backgroundColor: Color.fromRGBO(0, 191, 166, 1),
         title: Text(
           "Orders",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 30.sp,
           ),
         ),
       ),
@@ -85,11 +86,11 @@ class OrdersPage extends StatelessWidget {
                         child: ListTile(
                           title: Text(
                             data['productName'],
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
                           ),
                           subtitle: Text(
                             'Price: \$${data['productPrice'].toString()}, Rating: ${data['rating'].toString()}',
-                            style: TextStyle(fontSize: 17),
+                            style: TextStyle(fontSize: 17.sp),
                           ),
                           onTap: () {
                             // Handle tapping on an order to view details
@@ -110,6 +111,7 @@ class OrdersPage extends StatelessWidget {
                                   children: <Widget>[
                                     StarRatingWidget(
                                       initialRating: userRating,
+
                                       onRatingChanged: (rating) {
                                         userRating = rating;
                                       },
@@ -142,8 +144,8 @@ class OrdersPage extends StatelessWidget {
                                           if (vendorQuerySnapshot.docs.isNotEmpty) {
                                             // There should be only one document with this vendorId
                                             final vendorDoc = vendorQuerySnapshot.docs.first;
-                                            double currentRating = vendorDoc['rating'] ?? 0.0; // Get current rating or default to 0
-                                            int numberOfRatings = vendorDoc['numberOfRatings'] ?? 0; // Get current number of ratings or default to 0
+                                            double currentRating = vendorDoc['rating'] ?? 3.5; // Get current rating or default to 0
+                                            int numberOfRatings = vendorDoc['numberOfRatings'] ?? 1; // Get current number of ratings or default to 0
 
                                             // Calculate new average rating
                                             double newRating = ((currentRating * numberOfRatings) + userRating) / (numberOfRatings + 1);
@@ -207,8 +209,8 @@ class OrdersPage extends StatelessWidget {
                         label: Text(''),
                         style: ElevatedButton.styleFrom(
                           shape: CircleBorder(),
-                          backgroundColor: Color.fromRGBO(108, 99, 255, 1),
-                          padding: EdgeInsets.all(16.0),
+                          backgroundColor: Color.fromRGBO(0, 191, 166, 1),
+                          padding: EdgeInsets.all(16.0).r,
                         ),
                       ),
                     ],

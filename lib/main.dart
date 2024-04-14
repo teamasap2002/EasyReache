@@ -36,7 +36,7 @@ class EasyReachesApp extends StatelessWidget {
           routes: {
             '/': (context)=> const SplashScreen(),
             '/signup': (context)=>const SignUp(),
-            '/phone': (context)=>const PhoneAuth(),
+            '/phone': (context)=> PhoneAuth(),
           },
         );
       },

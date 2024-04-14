@@ -26,6 +26,17 @@ class _AddressState extends State<Address> {
         .snapshots();
   }
 
+  void deleteAddress(String documentId) {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(_currentUserUid)
+        .collection('Addresses')
+        .doc(documentId)
+        .delete()
+        .then((value) => print("Address deleted successfully"))
+        .catchError((error) => print("Failed to delete address: $error"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,37 +65,94 @@ class _AddressState extends State<Address> {
                 if (data == null) {
                   return SizedBox(); // If data is null, return an empty widget
                 }
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(5).r,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Color.fromRGBO(0, 191, 166, 1), width: 2.0.sp), // Add border
-                        borderRadius: BorderRadius.circular(10), // Optional: Add border radius
-                      ),
-                      child: ListTile(
-                        title: Text(
-                          document.id,
-                          style: TextStyle(
-                              color: const Color.fromRGBO(0, 191, 166, 1),
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500
-                          ),
+                return Dismissible(
+                  key: Key(document.id),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onDismissed: (direction) {
+                    deleteAddress(document.id);
+                  },
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5).r,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color.fromRGBO(0, 191, 166, 1),
+                              width: 2.0.sp), // Add border
+                          borderRadius: BorderRadius.circular(
+                              10), // Optional: Add border radius
                         ),
-                        subtitle: Text(data['House details'] ?? ''),
-                        trailing: IconButton(
-                          icon: Icon(Icons.edit, color: Color.fromRGBO(0, 191, 166, 1),),
-                          onPressed: () {
-                            // Navigate to edit address page with address data
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditAddress(
-                                  documentId: document.id
+                        child: ListTile(
+                          title: Text(
+                            document.id,
+                            style: TextStyle(
+                                color: const Color.fromRGBO(0, 191, 166, 1),
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          subtitle: Text(data['House details'] ?? ''),
+                          trailing: SizedBox(
+                            width: 110.w,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Color.fromRGBO(0, 191, 166, 1),
+                                  ),
+                                  onPressed: () {
+                                    // Navigate to edit address page with address data
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditAddress(documentId: document.id),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              ),
-                            );
-                          },
+                                IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.red,),
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text("Delete Address", style: TextStyle(color: Color.fromRGBO(0, 191, 166, 1))),
+                                          content: Text("Are you sure you want to delete this address?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context); // Close the dialog
+                                              },
+                                              child: const Text("Cancel", style: TextStyle(color: Color.fromRGBO(0, 191, 166, 1))),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                deleteAddress(document.id);
+                                                Navigator.pop(context); // Close the dialog
+                                              },
+                                              child: const Text("Delete", style: TextStyle(color: Colors.red),),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),

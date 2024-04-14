@@ -64,7 +64,7 @@ class _SignUpState extends State<SignUp> {
               ),
               UiHelper.CustomIconButton(() {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const PhoneAuth()));
+                    MaterialPageRoute(builder: (context) => PhoneAuth()));
               }, Icons.phone, Colors.white, "Sign up with Mobile",
                   const Color.fromRGBO(0, 191, 166, 1), Colors.white),
               SizedBox(

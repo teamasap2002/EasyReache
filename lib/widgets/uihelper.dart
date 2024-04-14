@@ -43,7 +43,7 @@ class UiHelper{
                 mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Icon(iconData, color: iconColor),
-                    SizedBox(width: 15.w,),
+                    SizedBox(width: 12.w,),
                     Text(
                       text,
                       style: TextStyle(
