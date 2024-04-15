@@ -1,11 +1,8 @@
 //
-//
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:project/Activity/store_screen.dart';
-//
-//
 //
 // class OrdersPage extends StatelessWidget {
 //   @override
@@ -66,7 +63,7 @@
 //                     trailing: ElevatedButton.icon(
 //                       onPressed: () {
 //                         // Mark the order as complete in Firebase
-//
+//                         FirebaseFirestore.instance.collection('orders').doc(document.id).update({'status': 'complete'});
 //                       },
 //                       icon: Icon(Icons.check, color: Colors.white),
 //                       label: Text(''),
@@ -91,7 +88,6 @@
 //     );
 //   }
 // }
-
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -156,8 +152,21 @@ class OrdersPage extends StatelessWidget {
                     ),
                     trailing: ElevatedButton.icon(
                       onPressed: () {
-                        // Mark the order as complete in Firebase
-                        FirebaseFirestore.instance.collection('orders').doc(document.id).update({'status': 'complete'});
+                        // Display rating dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Rate Vendor"),
+                              content: RateVendorDialog(
+                                vendorId: data['vendorId'],
+                                documentId: document.id,
+                                currentRating: (data['vendorRating'] ?? 0).toDouble(),
+                                currentNumberOfRatings: data['numberOfRatings'] ?? 0,
+                              ),
+                            );
+                          },
+                        );
                       },
                       icon: Icon(Icons.check, color: Colors.white),
                       label: Text(''),
@@ -179,6 +188,68 @@ class OrdersPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class RateVendorDialog extends StatefulWidget {
+  final String vendorId;
+  final String documentId;
+  final double currentRating;
+  final int currentNumberOfRatings;
+
+  RateVendorDialog({required this.vendorId, required this.documentId, required this.currentRating, required this.currentNumberOfRatings});
+
+  @override
+  _RateVendorDialogState createState() => _RateVendorDialogState();
+}
+
+class _RateVendorDialogState extends State<RateVendorDialog> {
+  double _newRating = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("Rate the vendor on a scale of 5 stars:"),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(5, (index) {
+            return IconButton(
+              icon: Icon(index < _newRating ? Icons.star : Icons.star_border),
+              onPressed: () {
+                setState(() {
+                  _newRating = index + 1;
+                });
+              },
+            );
+          }),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            // Calculate new average rating and number of ratings
+            double newAverageRating = ((_newRating + (widget.currentRating * widget.currentNumberOfRatings)) / (widget.currentNumberOfRatings + 1));
+            int newNumberOfRatings = widget.currentNumberOfRatings + 1;
+
+            // Update vendor rating and number of ratings in Firestore
+            await FirebaseFirestore.instance.collection('vendors').doc(widget.vendorId).update({
+              'rating': newAverageRating,
+              'numberOfRatings': newNumberOfRatings,
+            });
+
+            // Mark order as complete in Firestore
+            await FirebaseFirestore.instance.collection('orders').doc(widget.documentId).update({'status': 'complete'});
+
+            // Print vendor ID, updated rating, and order status
+            print('Vendor ID: ${widget.vendorId}, Updated Rating: $newAverageRating, Number of Ratings: $newNumberOfRatings, Order Status: complete');
+
+            // Close the dialog
+            Navigator.pop(context);
+          },
+          child: Text('Rate'),
+        ),
+      ],
     );
   }
 }
