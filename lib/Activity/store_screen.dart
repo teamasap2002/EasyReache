@@ -361,9 +361,21 @@ class _StoreScreenState extends State<StoreScreen> {
                                                 product['productName'],
                                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
                                               ),
-                                              subtitle: Text(
-                                                product['productDescription'],
-                                                style: TextStyle(fontSize: 17.sp),
+                                              subtitle: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Icon(Icons.star, color: Colors.amber, size: 20.sp),
+                                                      SizedBox(width: 5.w),
+                                                      Text('${product['rating']}', style: TextStyle(fontSize: 16.sp)),
+                                                    ],
+                                                  ),
+                                                  Text(
+                                                    product['productDescription'],
+                                                    style: TextStyle(fontSize: 17.sp),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Divider(color: Colors.grey),

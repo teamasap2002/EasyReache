@@ -265,7 +265,19 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                         color: const Color.fromRGBO(108, 99, 255, 1),
                                       ),
                                     ),
-                                    subtitle: Text(product['productDescription']),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(Icons.star, color: Colors.amber, size: 20.sp),
+                                            SizedBox(width: 5.w),
+                                            Text('${product['rating']}', style: TextStyle(fontSize: 16.sp)),
+                                          ],
+                                        ),
+                                        Text(product['productDescription']),
+                                      ],
+                                    ),
                                     // You can add more information here such as price, etc.
                                   ),
                                   Divider(color: Colors.grey),
