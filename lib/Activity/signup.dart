@@ -7,7 +7,7 @@ import 'package:project/services/auth.dart';
 import 'package:project/widgets/uihelper.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -15,6 +15,7 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   bool isloading = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,66 +28,89 @@ class _SignUpState extends State<SignUp> {
                 "Sign Up",
                 style: TextStyle(fontSize: 30.sp, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
-                height: 30.h,
-              ),
+              SizedBox(height: 30.h),
               Image.asset(
                 "assets/images/signup.png",
                 height: 200.h,
                 width: 200.w,
               ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Container(
+              SizedBox(height: 40.h),
+              isloading
+                  ? CircularProgressIndicator() // Show loading indicator when loading
+                  : Container(
                 height: 56.h,
                 width: 256.w,
-                child: SignInButton(Buttons.googleDark,
-                    text: "Sign up with Google", onPressed: () {
-                  try {
-                    if(isLogin){
-                      Navigator.pushReplacement(
+                child: SignInButton(
+                  Buttons.googleDark,
+                  text: "Sign up with Google",
+                  onPressed: () async {
+                    setState(() {
+                      isloading = true; // Set loading to true when initiating sign-in
+                    });
+                    try {
+                      if (isLogin) {
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const NavigationMenu()));
-                    } else{
-                        signInWithGoogle();
+                            builder: (context) => const NavigationMenu(),
+                          ),
+                        );
+                      } else {
+                        await signInWithGoogle();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NavigationMenu(),
+                          ),
+                        );
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Failed SignIn: $e"),
+                        ),
+                      );
+                    } finally {
+                      setState(() {
+                        isloading = false; // Set loading to false after sign-in attempt
+                      });
                     }
-                  } catch (e) {
-                    const SnackBar(
-                      content: Text("Failed SignIn"),
-                    );
-                  }
-                }),
+                  },
+                ),
               ),
-              SizedBox(
-                height: 20.h,
+              SizedBox(height: 20.h),
+              UiHelper.CustomIconButton(
+                    () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => PhoneAuth()),
+                  );
+                },
+                Icons.phone,
+                Colors.white,
+                "Sign up with Mobile",
+                const Color.fromRGBO(0, 191, 166, 1),
+                Colors.white,
               ),
-              UiHelper.CustomIconButton(() {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => PhoneAuth()));
-              }, Icons.phone, Colors.white, "Sign up with Mobile",
-                  const Color.fromRGBO(0, 191, 166, 1), Colors.white),
-              SizedBox(
-                height: 30.h,
-              ),
+              SizedBox(height: 30.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Already a User?",
-                    style:
-                        TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
+                    style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w500),
                   ),
                   TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Log in",
-                        style: TextStyle(
-                            color: const Color.fromRGBO(0, 191, 166, 1),
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w500),
-                      )),
+                    onPressed: () {},
+                    child: Text(
+                      "Log in",
+                      style: TextStyle(
+                        color: const Color.fromRGBO(0, 191, 166, 1),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
