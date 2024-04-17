@@ -44,8 +44,8 @@ class _ProfileState extends State<Profile> {
                       return const Center(child: CircularProgressIndicator());
                     }
                     String profilePhotoUrl =
-                        snapshot.data?['profilePhoto'] ??
-                            "https://cdn-icons-png.flaticon.com/128/1144/1144760.png";
+                        snapshot.data?['profilePhoto'];
+                            // "https://cdn-icons-png.flaticon.com/128/1144/1144760.png";
                     String name = snapshot.data?['name'] ?? "Edit your Profile";
 
                     return Row(
