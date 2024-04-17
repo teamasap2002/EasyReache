@@ -93,6 +93,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/Activity/store_screen.dart';
 
 class OrdersPage extends StatelessWidget {
@@ -103,13 +104,13 @@ class OrdersPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(108, 99, 255, 1),
+        backgroundColor: const Color.fromRGBO(0, 191,166, 1),
         title: Text(
           "Orders",
           style: TextStyle(
             fontWeight: FontWeight.w500,
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 30.sp,
           ),
         ),
       ),
@@ -135,18 +136,18 @@ class OrdersPage extends StatelessWidget {
                   ListTile(
                     title: Text(
                       '${data['productName']}',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp),
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Price: \$${data['productPrice'].toString()}',
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(fontSize: 17.sp),
                         ),
                         Text(
                           'Vendor: ${data['vendorName']}',
-                          style: TextStyle(fontSize: 17),
+                          style: TextStyle(fontSize: 17.sp),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -157,23 +158,20 @@ class OrdersPage extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text("Rate Vendor"),
-                              content: ReviewPage(
+                            return ReviewPage(
                                 vendorID: data['vendorId'],
                                 documentId: document.id,
                                 productId : data['productId'],
-                              ),
-                            );
+                              );
                           },
                         );
                       },
                       icon: Icon(Icons.check, color: Colors.white),
                       label: Text(''),
                       style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Color.fromRGBO(108, 99, 255, 1),
-                        padding: EdgeInsets.all(16.0),
+                        shape: const CircleBorder(),
+                        backgroundColor: const Color.fromRGBO(0, 191, 166, 1),
+                        padding: EdgeInsets.all(16.0.r),
                       ),
                     ),
                     onTap: () {
@@ -181,7 +179,7 @@ class OrdersPage extends StatelessWidget {
                       // You can navigate to a new page to display more details here
                     },
                   ),
-                  Divider(color: Colors.grey),
+                  const Divider(color: Colors.grey),
                 ],
               );
             },
@@ -192,67 +190,6 @@ class OrdersPage extends StatelessWidget {
   }
 }
 
-// class RateVendorDialog extends StatefulWidget {
-//   final String vendorId;
-//   final String documentId;
-//   final double currentRating;
-//   final int currentNumberOfRatings;
-//
-//   RateVendorDialog({required this.vendorId, required this.documentId, required this.currentRating, required this.currentNumberOfRatings});
-//
-//   @override
-//   _RateVendorDialogState createState() => _RateVendorDialogState();
-// }
-//
-// class _RateVendorDialogState extends State<RateVendorDialog> {
-//   double _newRating = 0;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       mainAxisSize: MainAxisSize.min,
-//       children: [
-//         Text("Rate the vendor on a scale of 5 stars:"),
-//         Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: List.generate(5, (index) {
-//             return IconButton(
-//               icon: Icon(index < _newRating ? Icons.star : Icons.star_border),
-//               onPressed: () {
-//                 setState(() {
-//                   _newRating = index + 1;
-//                 });
-//               },
-//             );
-//           }),
-//         ),
-//         ElevatedButton(
-//           onPressed: () async {
-//             // Calculate new average rating and number of ratings
-//             double newAverageRating = ((_newRating + (widget.currentRating * widget.currentNumberOfRatings)) / (widget.currentNumberOfRatings + 1));
-//             int newNumberOfRatings = widget.currentNumberOfRatings + 1;
-//
-//             // Update vendor rating and number of ratings in Firestore
-//             await FirebaseFirestore.instance.collection('vendors').doc(widget.vendorId).update({
-//               'rating': newAverageRating,
-//               'numberOfRatings': newNumberOfRatings,
-//             });
-//
-//             // Mark order as complete in Firestore
-//             await FirebaseFirestore.instance.collection('orders').doc(widget.documentId).update({'status': 'complete'});
-//
-//             // Print vendor ID, updated rating, and order status
-//             print('Vendor ID: ${widget.vendorId}, Updated Rating: $newAverageRating, Number of Ratings: $newNumberOfRatings, Order Status: complete');
-//
-//             // Close the dialog
-//             Navigator.pop(context);
-//           },
-//           child: Text('Rate'),
-//         ),
-//       ],
-//     );
-//   }
-// }
 class ReviewPage extends StatefulWidget {
   final  vendorID;
   final documentId;
@@ -276,53 +213,73 @@ class _ReviewPageState extends State<ReviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Leave a Review'),
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Rate Service",
+            style: TextStyle(
+              color: const Color.fromRGBO(0, 191, 166, 1),
+              fontSize: 24.sp,
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            RatingBar.builder(
-              initialRating: _rating,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              itemBuilder: (context, _) => Icon(
-                Icons.star,
-                color: Colors.amber,
-              ),
-              onRatingUpdate: (rating) {
-                setState(() {
-                  _rating = rating;
-                });
-              },
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          RatingBar.builder(
+            initialRating: _rating,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => Icon(
+              Icons.star,
+              color: Colors.amber,
             ),
-            SizedBox(height: 20),
-            TextFormField(
-              controller: _reviewController,
-              decoration: InputDecoration(
-                labelText: 'Write your review',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 3,
+            onRatingUpdate: (rating) {
+              setState(() {
+                _rating = rating;
+              });
+            },
+          ),
+          SizedBox(height: 20.h),
+          TextFormField(
+            controller: _reviewController,
+            decoration: InputDecoration(
+              labelText: 'Write your review',
+              border: OutlineInputBorder(),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                submitReview(_rating, _reviewController.text, _currentUser.uid, widget.vendorID, widget.documentId, widget.productId);
-                Navigator.pop(context);
-              },
-              child: Text('Submit Review'),
-            ),
-          ],
+            maxLines: 3,
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color.fromRGBO(0, 191, 166, 1),
+            textStyle: const TextStyle(color: Colors.white),
+          ),
+          onPressed: () {
+            submitReview(_rating, _reviewController.text, _currentUser.uid,
+                widget.vendorID, widget.documentId, widget.productId);
+            Navigator.pop(context);
+          },
+          child: Text('Submit Review', style: TextStyle(color: Colors.black, fontSize: 17.sp),),
         ),
-      ),
+
+      ],
     );
   }
 }
