@@ -97,7 +97,7 @@ flutter:
   fonts:
     - family: FontMain
       fonts:
-        - asset: assets/fonts/Domine-VariableFont_wght.ttf
+        - asset: assets/fonts/Outfit-VariableFont_wght.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

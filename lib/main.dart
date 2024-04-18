@@ -31,7 +31,7 @@ class EasyReachesApp extends StatelessWidget {
             // Apply the custom font globally
             fontFamily: 'FontMain',
           ),
-          //home: MyHomePage(),
+
           debugShowCheckedModeBanner: false,
           routes: {
             '/': (context)=> const SplashScreen(),
