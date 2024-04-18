@@ -28,7 +28,6 @@ class EasyReachesApp extends StatelessWidget {
       builder: (context, child){
         return MaterialApp(
           theme: ThemeData(
-            // Apply the custom font globally
             fontFamily: 'FontMain',
           ),
 
