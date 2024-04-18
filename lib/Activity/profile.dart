@@ -15,6 +15,12 @@ class Profile extends StatefulWidget {
 }
 class _ProfileState extends State<Profile> {
   User? user = FirebaseAuth.instance.currentUser;
+  bool notify = true;
+  onChangeFunction(bool newval){
+    setState(() {
+      notify = newval;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -251,7 +257,7 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 10.h,
                 ),
-                buildNotificationOptionRow("New for you", true),
+                buildNotificationOptionRow("New for you", notify, onChangeFunction ),
 
                 SizedBox(
                   height: 50.h,
@@ -285,7 +291,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Row buildNotificationOptionRow(String title, bool isActive) {
+  Row buildNotificationOptionRow(String title, bool value, Function onChangeMethod) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -305,10 +311,16 @@ class _ProfileState extends State<Profile> {
         Transform.scale(
             scale: 0.7,
             child: CupertinoSwitch(
-              value: isActive,
-              onChanged: (bool val) {},
+              activeColor: Color.fromRGBO(0, 191, 166, 1),
+              trackColor: Colors.grey,
+              value: value,
+              onChanged: (bool newVal) {
+                onChangeMethod(newVal);
+              },
             ))
       ],
     );
   }
+
+
 }
