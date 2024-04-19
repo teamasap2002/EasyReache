@@ -272,7 +272,11 @@ class _CategoryProductsScreenState extends State<CategoryProductsScreen> {
                                           children: [
                                             Icon(Icons.star, color: Colors.amber, size: 20.sp),
                                             SizedBox(width: 5.w),
-                                            Text('${product['rating']}', style: TextStyle(fontSize: 16.sp)),
+
+                                            Text(
+                                              '${product['rating'].toStringAsFixed(1)}', // Display rating with two digits after the decimal point
+                                              style: TextStyle(fontSize: 18.0),
+                                            ),
                                           ],
                                         ),
                                         Text(product['productDescription']),
