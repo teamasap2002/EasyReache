@@ -97,7 +97,7 @@ flutter:
   fonts:
     - family: FontMain
       fonts:
-        - asset: assets/fonts/Outfit-VariableFont_wght.ttf
+        - asset: assets/fonts/VarelaRound-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
