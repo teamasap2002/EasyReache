@@ -87,6 +87,8 @@ import 'package:project/widgets/banner_carousel.dart';
 import 'package:project/widgets/home_category_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../navigation_menu.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key});
 
@@ -107,6 +109,21 @@ class _HomeState extends State<Home> {
       apiUrlWithUserId =
       'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/recommendations/${user.uid}';
     }
+  }
+
+  Future<void> _refresh()async {
+      return Future.delayed(const Duration(seconds: 2),(){
+            setState(() {
+              // User? user = FirebaseAuth.instance.currentUser;
+              // if(user!=null){
+              //   apiUrlWithUserId = 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/recommendations/${user.uid}';
+              //   ApiDataFetcher(apiUrl: apiUrlWithUserId, heading: 'Top Picks For You');
+              //   ApiDataFetcher(apiUrl: 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/', heading: 'Popular Products');
+              // }
+              // print(apiUrlWithUserId);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const NavigationMenu()));
+            });
+      });
   }
 
   @override
@@ -145,17 +162,20 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BannerCarousel(),
-            SizedBox(
-              height: 15,
-            ),
-            ApiDataFetcher(apiUrl: apiUrlWithUserId, heading: 'Top Picks For You'),
-            ApiDataFetcher(apiUrl: 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/', heading: 'Popular Products'),
-            HomeCategoryWidget(),
-          ],
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              BannerCarousel(),
+              SizedBox(
+                height: 15,
+              ),
+              ApiDataFetcher(apiUrl: apiUrlWithUserId, heading: 'Top Picks For You'),
+              ApiDataFetcher(apiUrl: 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/', heading: 'Popular Products'),
+              HomeCategoryWidget(),
+            ],
+          ),
         ),
       ),
     );
