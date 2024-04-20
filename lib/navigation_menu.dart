@@ -5,6 +5,7 @@ import 'package:project/Activity/recommended_services.dart';
 import 'package:project/Activity/services.dart';
 import 'package:project/Activity/store_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:project/widgets/address_list_widget.dart';
 
 import 'Activity/recommended_product_widget.dart';
 class NavigationMenu extends StatefulWidget {
@@ -19,7 +20,8 @@ class _NavigationMenuState extends State<NavigationMenu> {
   List<Widget> widgetList = [
     Home(),
     StoreScreen(),
-    Profile()]
+    Profile(),
+  ]
     ;
   List<Color> colorList = const[
     Color.fromRGBO(0, 176, 255, 1),
