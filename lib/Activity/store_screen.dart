@@ -316,6 +316,9 @@ class _StoreScreenState extends State<StoreScreen> {
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
                                           ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
                                         ),
                                         if (remainingProductsCount > 0)
                                           TextButton(

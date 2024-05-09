@@ -98,8 +98,14 @@ class _AddressState extends State<Address> {
                                 color: const Color.fromRGBO(0, 191, 166, 1),
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
                           ),
-                          subtitle: Text(data['House details'] ?? ''),
+                          subtitle: Text(data['House details'] ?? ''
+                            ,maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,),
                           trailing: SizedBox(
                             width: 110.w,
                             child: Row(

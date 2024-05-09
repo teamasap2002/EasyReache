@@ -243,7 +243,7 @@ class _ReviewPageState extends State<ReviewPage> {
             direction: Axis.horizontal,
             allowHalfRating: true,
             itemCount: 5,
-            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemPadding: EdgeInsets.symmetric(horizontal: 3.0.w),
             itemBuilder: (context, _) => Icon(
               Icons.star,
               color: Colors.amber,

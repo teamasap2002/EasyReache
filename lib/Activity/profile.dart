@@ -97,6 +97,9 @@ class _ProfileState extends State<Profile> {
                                   fontSize: 20.sp,
                                   color: const Color.fromRGBO(0, 191, 166, 1),
                                   fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         )
