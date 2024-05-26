@@ -54,7 +54,9 @@ dependencies:
   google_maps_flutter: ^2.2.0
   geocoding: ^3.0.0
   permission_handler: ^10.2.0
-
+  app_settings: ^5.1.1
+  firebase_messaging: ^14.9.3
+  flutter_local_notifications: ^17.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
