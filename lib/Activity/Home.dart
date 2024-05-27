@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project/Activity/recommended_services.dart';
 import 'package:project/services/notification_services.dart';
 import 'package:project/widgets/banner_carousel.dart';
+import 'package:project/widgets/banner_carousel2.dart';
 import 'package:project/widgets/home_category_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -91,6 +92,7 @@ class _HomeState extends State<Home> {
               ),
               ApiDataFetcher(apiUrl: apiUrlWithUserId, heading: 'Top Picks For You'),
               ApiDataFetcher(apiUrl: 'https://4a9fda99-5ce7-4cbb-adbc-6837483887b3-00-3dbj6hsj63267.kirk.replit.dev:5000/', heading: 'Popular Products'),
+              BannerCarouselSecond(),
               HomeCategoryWidget(),
             ],
           ),
