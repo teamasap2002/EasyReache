@@ -45,11 +45,11 @@ class VendorDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Vendor Details',
-                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 20.0),
+              // Text(
+              //   'Vendor Details',
+              //   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              // ),
+              // SizedBox(height: 20.0),
               CircleAvatar(
                 radius: 60.0,
                 backgroundImage: NetworkImage(vendorImage),

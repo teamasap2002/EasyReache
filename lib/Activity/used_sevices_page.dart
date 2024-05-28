@@ -49,7 +49,7 @@ class UsedServicesPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Price: \$${data['productPrice'].toString()}',
+                          'Price: \Rs.${data['productPrice'].toString()}',
                           style: TextStyle(fontSize: 17.sp),
                         ),
                         Text(
