@@ -92,7 +92,7 @@ Follow these steps to run the application locally:
   - Open a pull request.
 
 ## License
-The Project is Licensed under [][MIT_LICENSE]
+The Project is Licensed under [MIT_LICENSE](https://github.com/teamasap2002/EasyReache/blob/main/LICENSE.md)
 
 ## Contact
   For questions or feedback, please contact:
